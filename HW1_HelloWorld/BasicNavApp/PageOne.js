@@ -8,8 +8,7 @@ function PageOne({ navigation }) {
       <Text>Hello from Page One!</Text>
       <Button
         title="Go to Page Two"
-        onPress={() => navigation.navigate('PageTwo')}
-      />
+        onPress={() => navigation.navigate('PageTwo')}/>
     </View>
   ); 
 }
