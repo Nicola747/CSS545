@@ -14,7 +14,11 @@ function App() {
   return ( 
     <NavigationContainer>
       <Stack.Navigator initialRouteName="PageOne">
-        <Stack.Screen name="PageOne" component={PageOne} />
+        <Stack.Screen 
+          name="PageOne" 
+          component={PageOne} 
+          options={{ headerShown: false }}
+            />
         <Stack.Screen
             name="PageTwo"
             component={PageTwo}

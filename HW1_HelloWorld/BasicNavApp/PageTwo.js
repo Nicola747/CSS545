@@ -1,29 +1,44 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-// Makes page two have a button that takes you to page one
+// Page Two with a round button that navigates to Page One
 function PageTwo({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Hello from Page Two!</Text>
-      <Button
-        title="Go to Page One"
-        onPress={() => navigation.navigate('PageOne')}
-      />
+      <TouchableOpacity style={styles.roundButton} onPress={() => navigation.navigate('PageOne')}>
+        <Text style={styles.buttonText}>Go to Page One</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
-const styles = {
+// Style to make the button round, set font size, color, and various other adjustments 
+const styles = StyleSheet.create({
   container: {
     flex: 1, 
     justifyContent: 'center', 
     alignItems: 'center', 
   },
   text: {
-    textAlign: 'center',  // Center the text as well 
-    marginBottom: 20,     // Add some spacing between the text and button
+    textAlign: 'center',
+    marginBottom: 20,
+    fontSize: 25,
+    color: '#000000',
   },
-};
+  roundButton: {
+    backgroundColor: '#1E90FF',
+    width: 100,           
+    height: 100,         
+    borderRadius: 50,     
+    justifyContent: 'center',  
+    alignItems: 'center',      
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,   
+    textAlign: 'center',
+  },
+});
 
 export default PageTwo;
