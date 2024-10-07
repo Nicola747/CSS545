@@ -16,5 +16,10 @@ Create a new pull request containing a file that describes at minimum:
         want to develop an app for iOS on Windows and we will need to test it throughout the development. 
         We plan to do so, as mentioned above, by using React Native and testing the app through the development process
         on Android emulators. Then near the end we would like to attempt running it on an iOS device. 
+    4. Include a brief explanation for your selections
+        As explained above, while we want to eventualy have the app running on iOS for the development of it we will be 
+        focusing on Android and using Android emulators through Android studio. We will be using React Native/JavaScript
+        as that will give us the crossplatform development capabilities we want and will most importantly allow us
+        to more easily develop and app for iOS on Windows.  
 
 
