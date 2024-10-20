@@ -24,7 +24,6 @@ const App = () => {
     if (storedMedia) {
       setMediaPath(storedMedia.path); // Set the media path
       setMediaType(storedMedia.type); // Set the media type (image/video)
-      setIsMediaLoaded(true);
     }
   };  
 
@@ -49,13 +48,13 @@ const App = () => {
       <Button title="Pick Media" onPress={handlePickMedia} />
       {/* Button to load stored media */}
       <Button title="Load Stored Media" onPress={handleLoadStoredMedia} />
-      {/* Conditionally render the media based on its type */}
-      {isMediaLoaded && mediaType === 'image' && mediaPath && <Image source={{ uri: `file://${mediaPath}` }} style={{ width: 300, height: 300 }} />}
-      {isMediaLoaded && mediaType === 'video' && mediaPath && (
+      {/* Render media only when the "Load Stored Media" button is pressed */}
+      {mediaPath && mediaType === 'image' && (
+        <Image source={{ uri: `file://${mediaPath}` }} style={{ width: 300, height: 300 }} />
+      )}
+      {mediaPath && mediaType === 'video' && (
         <Video source={{ uri: `file://${mediaPath}` }} style={{ width: 300, height: 300 }} controls />
       )}
-
-
     </View>
   );
 };
