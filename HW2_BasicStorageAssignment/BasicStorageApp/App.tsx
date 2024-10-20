@@ -16,11 +16,16 @@ const App = () => {
   // Used to differentiate between 'image' and 'video'
   const [mediaType, setMediaType] = useState<'image' | 'video' | null>(null);
 
-  // Tracks if any media is loaded in the app
-  const [isMediaLoaded, setIsMediaLoaded] = useState(false); 
+  // Temporarily store picked media path
+  const [pickedMediaPath, setPickedMediaPath] = useState<string | null>(null); 
+
+  // Temporarily store picked media type
+  const [pickedMediaType, setPickedMediaType] = useState<'image' | 'video' | null>(null); 
+
+
 
   const handleLoadStoredMedia = async () => {
-    const storedMedia = await loadStoredMedia(); // Try to load media from storage 
+    const storedMedia = await loadStoredMedia();
     if (storedMedia) {
       setMediaPath(storedMedia.path); // Set the media path
       setMediaType(storedMedia.type); // Set the media type (image/video)
@@ -29,12 +34,13 @@ const App = () => {
 
   // Picks media from the library and stores it locally
   const handlePickMedia = async () => {
-    const path = await pickAndStoreMedia(); 
+    const path = await pickAndStoreMedia();
     if (path) {
-      setMediaPath(path);  
-      setMediaType(path.endsWith('.mp4') ? 'video' : 'image'); 
+      setPickedMediaPath(path);
+      setPickedMediaType(path.endsWith('.mp4') ? 'video' : 'image');
     }
   };
+  
 
   return (
     <View style={{ flex: 1, backgroundColor: theme === 'light' ? '#fff' : '#333', justifyContent: 'center', alignItems: 'center' }}>
