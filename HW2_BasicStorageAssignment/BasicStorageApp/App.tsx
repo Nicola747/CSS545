@@ -49,7 +49,9 @@ const App = () => {
       {/* Theme toggle switch */}
       <Switch 
         value={theme === 'dark'} // Switch is on when theme is 'dark' 
-        onValueChange={toggleTheme} />
+        onValueChange={toggleTheme}
+        trackColor={{ false: '#ccc', true: '#81b0ff' }}
+        thumbColor={theme === 'dark' ? '#fff' : '#f4f3f4'} />
       {/* Button to pick and store media */}
       <Button title="Pick Media" onPress={handlePickMedia} />
       {/* Button to load stored media */}
