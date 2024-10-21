@@ -1,3 +1,5 @@
+//npm install react react-native react-native-video react-native-fs @react-native-async-storage/async-storage
+
 import React, { useState } from 'react';
 import { Button, Image, View, Text, Switch } from 'react-native';
 import Video from 'react-native-video';
