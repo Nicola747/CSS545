@@ -1,118 +1,75 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, AppState, AppStateStatus } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+const App = () => {
+  const [appState, setAppState] = useState<AppStateStatus>(AppState.currentState);
+  const [inputValue, setInputValue] = useState<string>('');
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  useEffect(() => {
+    // Clear any previous state when new app start
+    clearSavedState();
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+    const listener = AppState.addEventListener('change', handleAppStateChange);
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+    return () => {
+      listener.remove();
+    };
+  }, []);
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const handleAppStateChange = async (nextAppState: AppStateStatus) => {
+    if (appState.match(/inactive|background/) && nextAppState === 'active') {
+      // App becomes active
+      console.log('App has come to the foreground');
+      loadState();
+    } else if (nextAppState.match(/inactive|background/)) {
+      // App goes inactive
+      console.log('App is going to the background');
+      saveState();
+    }
+    setAppState(nextAppState);
+  };
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const saveState = async () => {
+    try {
+      await AsyncStorage.setItem('savedInput', inputValue);
+      console.log('State has been saved');
+    } catch (e) {
+      console.error('Error when saving state', e);
+    }
+  };
+
+  const loadState = async () => {
+    try {
+      const savedInput = await AsyncStorage.getItem('savedInput');
+      if (savedInput !== null) {
+        setInputValue(savedInput);
+        console.log('State has been restored');
+      }
+    } catch (e) {
+      console.error('Error when loading state', e);
+    }
+  };
+
+  const clearSavedState = async () => {
+    try {
+      await AsyncStorage.removeItem('savedInput');
+      console.log('Saved state has been cleared');
+    } catch (e) {
+      console.error('Error when clearing saved state', e);
+    }
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+    <View style={{ padding: 20 }}>
+      <Text>Type some text and then leave the app without ending the app process:</Text>
+      <TextInput
+        value={inputValue}
+        onChangeText={setInputValue}
+        style={{ height: 40, borderColor: 'black', borderWidth: 2, marginTop: 10 }}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    </View>
   );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+};
 
 export default App;
