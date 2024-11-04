@@ -24,3 +24,12 @@ We need to consider ***Inactive*** because it is very likely that the app will f
 
 <br>
 
+We need to consider ***Background*** because our app will spend most of its time being used in this state. As a timer/alarm app, it will most likely spend the most time in this state so it is most important to ensure that there are no errors that occur in this state or on resume/save of this state. What needs to happen in this state is that the app needs to save its state and ensure that a background process can continue that will monitor the status of the timer or an alarm. Most importantly we need to ensure that while the process is in the background, the alarms will still be able to ring when completed. This will likely be a fairly large challenge. 
+
+<br>
+
+We will need to consider ***Suspended*** state because it is important that if system resources are at their capacity and our app gets suspended because of it, the timer needs to keep working. What needs to happen is saving the state before being suspended and then continuing the timer through a background process. This will likely present a challenge to us. 
+
+<br>
+
+Finally, we need to consider what happens when the app is ***Killed***. We need to consider what we want the behavior to be when the app gets closed completely because obviously in this state nothing will be running in the background. What we could have happen is that we regularly save the state and then if the app is killed, on resume we calculate if the time elapsed has passed or if it is still ongoing we could resume the progress of the timer. Alternatively if there is a way to continue through a background process that would be ideal. However, that may be too much for the scope of this class. 
