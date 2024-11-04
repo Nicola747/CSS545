@@ -20,7 +20,7 @@ In ***Active*** we display timer and timer controls, we need to consider it beca
 
 <br>
 
-We need to consider ***Inactive** because it is very likely that the app will find itself in this state when the user switches away from our app. What needs to happen is that state should be saved and that the timer should continue counting down without errors. Then, when the app becomes active again, everything should be resumed with the updated progress of the timer. 
+We need to consider ***Inactive*** because it is very likely that the app will find itself in this state when the user switches away from our app. What needs to happen is that state should be saved and that the timer should continue counting down without errors. Then, when the app becomes active again, everything should be resumed with the updated progress of the timer. 
 
 <br>
 
