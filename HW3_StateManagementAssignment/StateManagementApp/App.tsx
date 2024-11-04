@@ -10,10 +10,10 @@ const App = () => {
     // Clear any previous state when new app start
     clearSavedState();
 
-    const listener = AppState.addEventListener('change', handleAppStateChange);
+    const stateListener = AppState.addEventListener('change', handleAppStateChange);
 
     return () => {
-      listener.remove();
+      stateListener.remove();
     };
   }, []);
 
